@@ -45,6 +45,8 @@ struct NotificationProperty: Equatable {
     let notificationMarginLeading: CGFloat
     let notificationCornerRadius: CGFloat
     let notificationPadding: EdgeInsets
+    let timeMarginTop: CGFloat
+    let timeMarginTrailing: CGFloat
     let contentSpacing: Int
     let title: String
     let titleFont: Font
@@ -65,6 +67,8 @@ struct NotificationProperty: Equatable {
             notificationMarginLeading: 24,
             notificationCornerRadius: 68,
             notificationPadding: .init(top: 40, leading: 42, bottom: 40, trailing: 86),
+            timeMarginTop: 40,
+            timeMarginTrailing: 46,
             contentSpacing: 34,
             title: title,
             titleFont: .system(size: 48, weight: .medium),
@@ -72,6 +76,30 @@ struct NotificationProperty: Equatable {
             bodyFont: .system(size: 44, weight: .regular),
             time: time,
             timeFont: .system(size: 38, weight: .regular),
+            iconImageResource: icon,
+            backgroundImageResource: background
+        )
+    }
+
+    static func iPadMini6(title: String, body: String, time: String, icon: ImageResource, background: ImageResource?) -> NotificationProperty {
+        .init(
+            width: 1488,
+            height: 2266,
+            iconWidth: 74,
+            iconCornerRadius: 16,
+            notificationMarginTop: 16,
+            notificationMarginLeading: 188,
+            notificationCornerRadius: 44,
+            notificationPadding: .init(top: 22, leading: 24, bottom: 26, trailing: 78),
+            timeMarginTop: 22,
+            timeMarginTrailing: 32,
+            contentSpacing: 18,
+            title: title,
+            titleFont: .system(size: 32, weight: .medium),
+            body: body,
+            bodyFont: .system(size: 30, weight: .regular),
+            time: time,
+            timeFont: .system(size: 26, weight: .regular),
             iconImageResource: icon,
             backgroundImageResource: background
         )

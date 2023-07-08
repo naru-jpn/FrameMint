@@ -77,7 +77,7 @@ class FrameMaker {
                         Text(property.time)
                             .font(property.timeFont)
                             .foregroundStyle(.black.opacity(0.5))
-                            .padding(EdgeInsets(top: 40, leading: 0, bottom: 0, trailing: 46))
+                            .padding(EdgeInsets(top: property.timeMarginTop, leading: 0, bottom: 0, trailing: property.timeMarginTrailing))
                     }
                     Spacer()
                 }
