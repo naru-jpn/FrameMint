@@ -1,8 +1,8 @@
 import SwiftUI
 
 enum FrameContent: Identifiable {
-    case helloWorld
-    case notification(property: NotificationProperty)
+    case helloWorld(title: String)
+    case notification(title: String, property: NotificationProperty)
 
     var id: String {
         title + String(width) + String(height)
@@ -10,15 +10,10 @@ enum FrameContent: Identifiable {
 
     var title: String {
         switch self {
-        case .helloWorld:
-            return "Hello, world!"
-        case .notification(let property):
-            switch property {
-            case .iPhone14:
-                return "Push Notification (iPhone14)"
-            default:
-                return "-"
-            }
+        case .helloWorld(let title):
+            return title
+        case .notification(let title, _):
+            return title
         }
     }
 
@@ -26,7 +21,7 @@ enum FrameContent: Identifiable {
         switch self {
         case .helloWorld:
             return 1024
-        case .notification(let property):
+        case .notification(_, let property):
             return property.width
         }
     }
@@ -35,7 +30,7 @@ enum FrameContent: Identifiable {
         switch self {
         case .helloWorld:
             return 1024
-        case .notification(let property):
+        case .notification(_, let property):
             return property.height
         }
     }
@@ -58,12 +53,9 @@ struct NotificationProperty: Equatable {
     let time: String
     let timeFont: Font
     let iconImageResource: ImageResource
+    let backgroundImageResource: ImageResource?
 
-    private static let sampleTitle = "Rendered Push Notification"
-    private static let sampleBody = "あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波"
-    private static let sampleTimeNow = "今"
-
-    static var iPhone14: NotificationProperty {
+    static func iPhone14(title: String, body: String, time: String, icon: ImageResource, background: ImageResource?) -> NotificationProperty {
         .init(
             width: 1170,
             height: 2532,
@@ -74,13 +66,14 @@ struct NotificationProperty: Equatable {
             notificationCornerRadius: 68,
             notificationPadding: .init(top: 40, leading: 42, bottom: 40, trailing: 86),
             contentSpacing: 34,
-            title: sampleTitle,
+            title: title,
             titleFont: .system(size: 48, weight: .medium),
-            body: sampleBody,
+            body: body,
             bodyFont: .system(size: 44, weight: .regular),
-            time: sampleTimeNow,
+            time: time,
             timeFont: .system(size: 38, weight: .regular),
-            iconImageResource: ImageResource(name: "default_icon", bundle: .main)
+            iconImageResource: icon,
+            backgroundImageResource: background
         )
     }
 }

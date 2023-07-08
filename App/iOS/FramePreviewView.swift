@@ -13,5 +13,10 @@ struct FramePreviewView: View {
                 .padding(.all)
         }
         .navigationTitle(content.title)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                ShareLink(item: image, preview: SharePreview("!", image: image)) { Image(systemName: "square.and.arrow.up") }
+            }
+        }
     }
 }

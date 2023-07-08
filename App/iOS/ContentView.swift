@@ -2,11 +2,20 @@ import SwiftUI
 
 struct ContentView: View {
     private var contents: [FrameContent] = [
-        .helloWorld,
-        .notification(property: .iPhone14)
+        .helloWorld(title: "Hello, world!"),
+        .notification(
+            title: "Push Notification (iPhone14)",
+            property: .iPhone14(
+                title: "Rendered Push Notification",
+                body: "あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波",
+                time: "今",
+                icon: ImageResource(name: "default_icon", bundle: .main),
+                background: ImageResource(name: "home001", bundle: .main)
+            )
+        )
     ]
 
-    @State var selectedContent: FrameContent = .helloWorld
+    @State var selectedContent: FrameContent = .helloWorld(title: "Hello, world!")
     @State var previewImage: Image = .init("", bundle: nil)
     @State var canPreview: Bool = false
     @State var isProcessing: Bool = false
