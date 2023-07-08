@@ -15,12 +15,15 @@ class FrameMaker {
                 canvas.addSwiftUIContents {
                     makeHelloWorldView()
                 }
+                canvas.drawContents()
             case .notification(_, let property):
                 canvas.addSwiftUIContents {
                     makeNotificationView(property)
                 }
+                canvas.drawContents()
+            case .resource(_, let property):
+                canvas.drawImage(UIImage(resource: property.resource))
             }
-            canvas.drawContents()
             return try canvas.make420YpCbCr8BiPlanarFullRangePixelBuffer()
         } catch {
             fatalError(error.localizedDescription)
@@ -67,7 +70,7 @@ class FrameMaker {
                     .padding(property.notificationPadding)
                     .background {
                         Color.clear
-                            .background(VisualEffect(style: .systemThickMaterial))
+                            .background(VisualEffect(style: .systemMaterial))
                             .clipShape(
                                 RoundedRectangle(cornerRadius: property.notificationCornerRadius, style: .continuous)
                             )

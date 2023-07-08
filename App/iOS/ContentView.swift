@@ -22,6 +22,22 @@ struct ContentView: View {
                 icon: ImageResource(name: "default_icon", bundle: .main),
                 background: ImageResource(name: "home_ipadmini6", bundle: .main)
             )
+        ),
+        .resource(
+            title: "Screenshot (iPhone14)",
+            property: .init(
+                width: 1170,
+                height: 2532,
+                resource: ImageResource(name: "screenshot_iphone14", bundle: .main)
+            )
+        ),
+        .resource(
+            title: "Screenshot (iPad mini 6)",
+            property: .init(
+                width: 1488,
+                height: 2266,
+                resource: ImageResource(name: "screenshot_ipadmini6", bundle: .main)
+            )
         )
     ]
 

@@ -3,6 +3,7 @@ import SwiftUI
 enum FrameContent: Identifiable {
     case helloWorld(title: String)
     case notification(title: String, property: NotificationProperty)
+    case resource(title: String, property: ResourceProperty)
 
     var id: String {
         title + String(width) + String(height)
@@ -14,6 +15,8 @@ enum FrameContent: Identifiable {
             return title
         case .notification(let title, _):
             return title
+        case .resource(let title, _):
+            return title
         }
     }
 
@@ -23,6 +26,8 @@ enum FrameContent: Identifiable {
             return 1024
         case .notification(_, let property):
             return property.width
+        case .resource(_, let property):
+            return property.width
         }
     }
 
@@ -31,6 +36,8 @@ enum FrameContent: Identifiable {
         case .helloWorld:
             return 1024
         case .notification(_, let property):
+            return property.height
+        case .resource(_, let property):
             return property.height
         }
     }
@@ -104,4 +111,10 @@ struct NotificationProperty: Equatable {
             backgroundImageResource: background
         )
     }
+}
+
+struct ResourceProperty {
+    let width: Int
+    let height: Int
+    let resource: ImageResource
 }

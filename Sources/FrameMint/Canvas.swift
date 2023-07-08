@@ -73,6 +73,17 @@ public final class Canvas {
         context.draw(cgImage, in: contentRect, byTiling: false)
     }
 
+    /// Draw image into pixel buffer in whole rect of content.
+    ///
+    /// - parameters:
+    ///   - image: Image to draw.
+    public func drawImage(_ image: UIImage) {
+        guard let cgImage = image.cgImage else {
+            return
+        }
+        context.draw(cgImage, in: contentRect, byTiling: false)
+    }
+
     /// Add SwiftUI contents over current contents.
     ///
     /// - parameters:
