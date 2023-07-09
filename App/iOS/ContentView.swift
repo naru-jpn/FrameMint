@@ -1,47 +1,78 @@
 import SwiftUI
 
-struct ContentView: View {
-    private var contents: [FrameContent] = [
-        .helloWorld(title: "Hello, world!"),
-        .notification(
-            title: "Push Notification (iPhone14)",
-            property: .iPhone14(
-                title: "Rendered Push Notification",
-                body: "あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波",
-                time: "今",
-                icon: ImageResource(name: "default_icon", bundle: .main),
-                background: ImageResource(name: "home_iphone14", bundle: .main)
-            )
+private struct ListContents {
+    struct Section: Identifiable {
+        let id = UUID().uuidString
+        let title: String
+        let contents: [FrameContent]
+    }
+
+    let sections: [Section]
+}
+
+private let listContents = ListContents(
+    sections: [
+        // SwiftUI
+        ListContents.Section(
+            title: "SwiftUI",
+            contents: [
+                .helloWorld(title: "Hello, world! (SwiftUI)", type: .swiftui),
+                .notification(
+                    title: "Push Notification (iPhone14)",
+                    property: .iPhone14(
+                        title: "Rendered Push Notification",
+                        body: "あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波",
+                        time: "今",
+                        icon: ImageResource(name: "default_icon", bundle: .main),
+                        background: ImageResource(name: "home_iphone14", bundle: .main)
+                    )
+                ),
+                .notification(
+                    title: "Push Notification (iPad mini 6)",
+                    property: .iPadMini6(
+                        title: "Rendered Push Notification",
+                        body: "あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波",
+                        time: "今",
+                        icon: ImageResource(name: "default_icon", bundle: .main),
+                        background: ImageResource(name: "home_ipadmini6", bundle: .main)
+                    )
+                )
+            ]
         ),
-        .notification(
-            title: "Push Notification (iPad mini 6)",
-            property: .iPadMini6(
-                title: "Rendered Push Notification",
-                body: "あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波",
-                time: "今",
-                icon: ImageResource(name: "default_icon", bundle: .main),
-                background: ImageResource(name: "home_ipadmini6", bundle: .main)
-            )
+        // UIKit
+        ListContents.Section(
+            title: "UIKit",
+            contents: [
+                .helloWorld(title: "Hello, world! (UIKit)", type: .uikit)
+            ]
         ),
-        .resource(
-            title: "Screenshot (iPhone14)",
-            property: .init(
-                width: 1170,
-                height: 2532,
-                resource: ImageResource(name: "screenshot_iphone14", bundle: .main)
-            )
-        ),
-        .resource(
-            title: "Screenshot (iPad mini 6)",
-            property: .init(
-                width: 1488,
-                height: 2266,
-                resource: ImageResource(name: "screenshot_ipadmini6", bundle: .main)
-            )
+        // Resource (UIImage)
+        ListContents.Section(
+            title: "Resource (UIImage)",
+            contents: [
+                .resource(
+                    title: "Screenshot (iPhone14)",
+                    property: .init(
+                        width: 1170,
+                        height: 2532,
+                        resource: ImageResource(name: "screenshot_iphone14", bundle: .main)
+                    )
+                ),
+                .resource(
+                    title: "Screenshot (iPad mini 6)",
+                    property: .init(
+                        width: 1488,
+                        height: 2266,
+                        resource: ImageResource(name: "screenshot_ipadmini6", bundle: .main)
+                    )
+                )
+            ]
         )
     ]
+)
 
-    @State var selectedContent: FrameContent = .helloWorld(title: "Hello, world!")
+struct ContentView: View {
+    @State var selectedContent: FrameContent = .helloWorld(title: "Hello, world!", type: .swiftui)
     @State var previewImage: Image = .init("", bundle: nil)
     @State var canPreview: Bool = false
     @State var isProcessing: Bool = false
@@ -50,21 +81,15 @@ struct ContentView: View {
         NavigationStack {
             ZStack {
                 List {
-                    ForEach(contents) { content in
-                        Text(content.title)
-                            .onTapGesture {
-                                selectedContent = content
-                                isProcessing = true
-                                Task {
-                                    // Sleep to display loading indicator by main thread
-                                    try? await Task.sleep(nanoseconds: 200_000_000)
-                                    if let image = await makePreviewImage(with: content) {
-                                        previewImage = image
-                                        canPreview = true
+                    ForEach(listContents.sections) { section in
+                        Section(section.title) {
+                            ForEach(section.contents) { content in
+                                Text(content.title)
+                                    .onTapGesture {
+                                        handleTapContent(content)
                                     }
-                                    isProcessing = false
-                                }
                             }
+                        }
                     }
                 }
                 if isProcessing {
@@ -77,6 +102,20 @@ struct ContentView: View {
             .navigationDestination(isPresented: $canPreview) {
                 FramePreviewView(content: selectedContent, image: previewImage)
             }
+        }
+    }
+
+    private func handleTapContent(_ content: FrameContent) {
+        selectedContent = content
+        isProcessing = true
+        Task {
+            // Sleep to display loading indicator by main thread
+            try? await Task.sleep(nanoseconds: 200_000_000)
+            if let image = await makePreviewImage(with: content) {
+                previewImage = image
+                canPreview = true
+            }
+            isProcessing = false
         }
     }
 

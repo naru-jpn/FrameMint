@@ -11,11 +11,17 @@ class FrameMaker {
             let canvas = try FrameMint.CanvasFactory().makeCanvas(width: content.width, height: content.height, extent: .zero)
             canvas.content.backgroundColor = .white
             switch content {
-            case .helloWorld:
-                canvas.addSwiftUIContents {
-                    makeHelloWorldView()
+            case .helloWorld(_, let type):
+                switch type {
+                case .swiftui:
+                    canvas.addSwiftUIContents {
+                        makeHelloWorldView()
+                    }
+                    canvas.drawContents()
+                case .uikit:
+                    addHelloWorldLabel(on: canvas.content)
+                    canvas.drawContents()
                 }
-                canvas.drawContents()
             case .notification(_, let property):
                 canvas.addSwiftUIContents {
                     makeNotificationView(property)
@@ -36,6 +42,15 @@ class FrameMaker {
             Text("Hello, world!")
                 .font(.system(size: 40, weight: .medium))
         }
+    }
+
+    private func addHelloWorldLabel(on view: UIView) {
+        let label = UILabel(frame: view.bounds)
+        label.backgroundColor = .white
+        label.text = "Hello, world!"
+        label.font = .systemFont(ofSize: 40, weight: .medium)
+        label.textAlignment = .center
+        view.addSubview(label)
     }
 
     private func makeNotificationView(_ property: NotificationProperty) -> some View {
@@ -96,7 +111,7 @@ class FrameMaker {
         }
         .ignoresSafeArea(.all)
     }
-    
+
     func makeImage(from pixelBuffer: CVPixelBuffer, _ ciContext: CIContext = CIContext()) -> UIImage? {
         let ciImage = CIImage(cvImageBuffer: pixelBuffer)
         guard let cgImage = ciContext.createCGImage(ciImage, from: ciImage.extent) else {

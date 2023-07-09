@@ -1,8 +1,16 @@
 import SwiftUI
 
+/// Contents to draw on canvas.
 enum FrameContent: Identifiable {
-    case helloWorld(title: String)
+    enum HelloWorldViewType {
+        case swiftui, uikit
+    }
+
+    /// Simple 1024x1024 Hello, world! view.
+    case helloWorld(title: String, type: HelloWorldViewType)
+    /// Mimic push notification interface.
     case notification(title: String, property: NotificationProperty)
+    /// Image drawn canvas.
     case resource(title: String, property: ResourceProperty)
 
     var id: String {
@@ -11,7 +19,7 @@ enum FrameContent: Identifiable {
 
     var title: String {
         switch self {
-        case .helloWorld(let title):
+        case .helloWorld(let title, _):
             return title
         case .notification(let title, _):
             return title
