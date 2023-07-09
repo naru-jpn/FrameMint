@@ -1,4 +1,4 @@
-# FrameMint
+# FrameMint 🌱
 Library to make pixel buffer for video frame formatted 420YpCbCr8BiPlanarFullRange from UIKit/SwiftUI view or UIImage.
 
 This library dose **NOT** written for real-time application.
