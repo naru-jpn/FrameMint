@@ -10,9 +10,9 @@ public final class CanvasFactory {
     /// Make pixel buffer for given parameters using preferred pixel buffer pool.
     ///
     /// - parameters:
-    ///   - width: Width of pooled pixel buffer.
-    ///   - height: Height of pooled pixel buffer.
-    ///   - extent: Extent of pooled pixel buffer.
+    ///   - width: Width of canvas.
+    ///   - height: Height of canvas.
+    ///   - extent: Extent(padding for pixel buffer) of canvas.
     /// - returns:
     ///   Created CVPixelBuffer.
     @MainActor
