@@ -32,8 +32,7 @@ class FrameMaker {
 
     private func makeHelloWorldView() -> some View {
         ZStack(alignment: .center) {
-            EmptyView()
-                .background(.white)
+            Color.white
             Text("Hello, world!")
                 .font(.system(size: 40, weight: .medium))
         }
