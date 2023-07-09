@@ -18,7 +18,7 @@ let canvasFactory = FrameMint.CanvasFactory()
 let canvas = try canvasFactory.makeCanvas(width: width, height: height, extent: extent)
 ```
 
-### 2. Draw contents on canvas
+### 2. Add/Draw contents on canvas
 
 #### a. Draw SwiftUI contents
 
