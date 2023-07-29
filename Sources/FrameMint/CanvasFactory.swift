@@ -15,7 +15,6 @@ public final class CanvasFactory {
     ///   - extent: Extent(padding for pixel buffer) of canvas.
     /// - returns:
     ///   Created CVPixelBuffer.
-    @MainActor
     public func makeCanvas(
         width: Int,
         height: Int,

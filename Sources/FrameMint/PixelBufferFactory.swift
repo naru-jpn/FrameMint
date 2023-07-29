@@ -2,7 +2,7 @@ import Accelerate
 import CoreMedia
 import UIKit
 
-/// Factory of pixel buffers.
+/// Factory of CVPixelBuffer.
 public final class PixelBufferFactory {
     /// Default instance
     public static let `default` = PixelBufferFactory()

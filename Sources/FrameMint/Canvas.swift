@@ -1,4 +1,5 @@
 import CoreGraphics
+import CoreMedia
 import SwiftUI
 import UIKit
 
@@ -63,6 +64,8 @@ public final class Canvas {
     }
 
     /// Draw contents on content view into pixel buffer.
+    ///
+    /// This method dose **not** working on unit test target due to behavior of iOS render server.
     public func drawContents() {
         let image = renderer.image { context in
             content.drawHierarchy(in: contentRect, afterScreenUpdates: true)
@@ -93,20 +96,31 @@ public final class Canvas {
         let hostingController = UIHostingController(rootView: builder())
         hostingController.view.frame = content.bounds
         hostingController.view.backgroundColor = .clear
-        hostingController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         content.addSubview(hostingController.view)
-        content.setNeedsLayout()
-        content.layoutIfNeeded()
-        content.setNeedsDisplay()
     }
 }
 
 extension Canvas {
-    /// Make 420YpCbCr8BiPlanarFullRange format pixel buffer from this instance.
+    /// Make 420YpCbCr8BiPlanarFullRange format pixel buffer from canvas.
     ///
     /// - parameters:
-    ///   - pixelBufferFactory: PixelBufferFactory to make CVPixelBuffer.
+    ///   - pixelBufferFactory: A PixelBufferFactory instance.
     public func make420YpCbCr8BiPlanarFullRangePixelBuffer(pixelBufferFactory: PixelBufferFactory = .default) throws -> CVPixelBuffer {
         try pixelBufferFactory.make420YpCbCr8BiPlanarFullRangePixelBuffer(from: self)
+    }
+
+    /// Make 420YpCbCr8BiPlanarFullRange format sample buffer from canvas.
+    ///
+    /// - parameters:
+    ///   - orientation: A value about frame orientation related with RPVideoSampleOrientationKey.
+    ///   - pixelBufferFactory: A PixelBufferFactory instance.
+    ///   - sampleBufferFactory: A SampleBufferFactory instance.
+    public func make420YpCbCr8BiPlanarFullRangeSampleBuffer(
+        orientation: Int,
+        pixelBufferFactory: PixelBufferFactory = .default,
+        sampleBufferFactory: SampleBufferFactory = .default
+    ) throws -> CMSampleBuffer {
+        let pixelBuffer = try pixelBufferFactory.make420YpCbCr8BiPlanarFullRangePixelBuffer(from: self)
+        return sampleBufferFactory.make420YpCbCr8BiPlanarFullRangeSampleBuffer(from: pixelBuffer, orientation: orientation)
     }
 }

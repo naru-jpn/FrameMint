@@ -2,7 +2,6 @@ import XCTest
 @testable import FrameMint
 
 final class PixelBufferFactoryTests: XCTestCase {
-    @MainActor
     func testCreatePixelBuffers() {
         let factory = PixelBufferFactory.default
 
