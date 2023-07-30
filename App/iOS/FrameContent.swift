@@ -62,7 +62,7 @@ struct NotificationProperty: Equatable {
     let notificationPadding: EdgeInsets
     let timeMarginTop: CGFloat
     let timeMarginTrailing: CGFloat
-    let contentSpacing: Int
+    let contentSpacing: CGFloat
     let title: String
     let titleFont: Font
     let body: String
@@ -78,17 +78,17 @@ struct NotificationProperty: Equatable {
             height: 2532,
             iconWidth: 112,
             iconCornerRadius: 26,
-            notificationMarginTop: 122,
+            notificationMarginTop: 120,
             notificationMarginLeading: 24,
             notificationCornerRadius: 68,
-            notificationPadding: .init(top: 40, leading: 42, bottom: 40, trailing: 86),
+            notificationPadding: .init(top: 32, leading: 42, bottom: 39, trailing: 86),
             timeMarginTop: 40,
-            timeMarginTrailing: 46,
-            contentSpacing: 34,
+            timeMarginTrailing: 50,
+            contentSpacing: 38,
             title: title,
-            titleFont: .system(size: 48, weight: .medium),
+            titleFont: .system(size: 49, weight: .medium),
             body: body,
-            bodyFont: .system(size: 44, weight: .regular),
+            bodyFont: .system(size: 45, weight: .regular),
             time: time,
             timeFont: .system(size: 38, weight: .regular),
             iconImageResource: icon,
@@ -104,11 +104,11 @@ struct NotificationProperty: Equatable {
             iconCornerRadius: 16,
             notificationMarginTop: 16,
             notificationMarginLeading: 188,
-            notificationCornerRadius: 44,
-            notificationPadding: .init(top: 22, leading: 24, bottom: 26, trailing: 78),
-            timeMarginTop: 22,
-            timeMarginTrailing: 32,
-            contentSpacing: 18,
+            notificationCornerRadius: 45,
+            notificationPadding: .init(top: 22, leading: 28, bottom: 26, trailing: 78),
+            timeMarginTop: 28,
+            timeMarginTrailing: 35,
+            contentSpacing: 26,
             title: title,
             titleFont: .system(size: 32, weight: .medium),
             body: body,

@@ -66,7 +66,7 @@ class FrameMaker {
                     Color.white.frame(width: geometry.size.width, height: geometry.size.height)
                 }
                 VStack {
-                    HStack(alignment: .center, spacing: 36) {
+                    HStack(alignment: .center, spacing: property.contentSpacing) {
                         Image(property.iconImageResource)
                             .resizable()
                             .frame(width: property.iconWidth, height: property.iconWidth)
