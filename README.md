@@ -67,11 +67,21 @@ canvas.drawImage(image)
 
 ### 3. Make video frame pixel buffer from canvas
 
+#### a. Create Pixel Buffer
+
 Example to make 420YpCbCr8BiPlanarFullRange format pixel buffer from canvas.
 
 ```swift
-let pixelBufferFactory = FrameMint.PixelBufferFactory.default
-let pixelBuffer = try pixelBufferFactory.make420YpCbCr8BiPlanarFullRangePixelBuffer(from: canvas)
+let pixelBuffer: CVPixelBuffer = canvas.make420YpCbCr8BiPlanarFullRangePixelBuffer()
+```
+
+#### b. Create Sample Buffer
+
+Example to make 420YpCbCr8BiPlanarFullRange format sample buffer from canvas.
+
+```swift
+// `orientation` is a value about frame orientation related with RPVideoSampleOrientationKey
+let sampleBuffer: CMSampleBuffer = canvas.make420YpCbCr8BiPlanarFullRangeSampleBuffer(orientation: orientation)
 ```
 
 ### Clear canvas
